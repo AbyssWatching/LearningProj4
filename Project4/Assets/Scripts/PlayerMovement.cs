@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     //Setting up vars
@@ -37,4 +38,12 @@ public class PlayerMovement : MonoBehaviour
         playerRB.AddForce(focalPoint.transform.forward * forwardMovement * speed);
        
     }
+	private void OnTriggerEnter(Collider other)
+	{
+		
+	}
+	private void OnCollisionEnter(Collision collision)
+	{
+		
+	}
 }
