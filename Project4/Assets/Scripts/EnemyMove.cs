@@ -19,6 +19,9 @@ public class EnemyMove : MonoBehaviour
         
         //gets GO of player
         player = GameObject.Find("Player");
+
+        // destroys GO if out of y position
+   
         
     }
 
@@ -31,7 +34,12 @@ public class EnemyMove : MonoBehaviour
         //moves enemy to player
         enemyRB.AddForce( moving * speed);
 
-        
+        if (transform.position.y < -10)
+        {
+            Destroy(gameObject);
+        }
+
+
 
 
     }
