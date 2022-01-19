@@ -9,16 +9,13 @@ public class PlayerMovement : MonoBehaviour
     //Setting up vars
     public float speed = 10;
     public float forwardMovement;
-    private bool hasPowerUP;
-    public float powerUpStrength = 15.0f;
-    public GameObject powerUp;
-
+    public bool hasPowerUP;
 
     //since we are using the .addforce we need to set up to use component rigibody
-    private Rigidbody playerRB;
+    public Rigidbody playerRB;
 
     //getting the focal point GO so we can make moving forward the way the camera is facing
-    private GameObject focalPoint;
+    public GameObject focalPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         //getting the input for forward motion
         forwardMovement = Input.GetAxis("Vertical");
 
-        powerUp.transform.position = this.transform.position;
+
 
 
         //pushes the player in the direction of the comera facing
@@ -46,50 +43,16 @@ public class PlayerMovement : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-        //only do this to things tagged power up
 		if (other.CompareTag("PowerUp"))
 		{
-            //destroy power up to simulate picking it up
             Destroy(other.gameObject);
-            
-            //turn the power up on for collision detect
             hasPowerUP = true;
-
-            powerUp.SetActive(true);
-
-            StartCoroutine("PowerUpCountDownRoutine");
-
 		}
 		
 	}
 
-    IEnumerator PowerUpCountDownRoutine() 
-    {
-        yield return new WaitForSeconds(7);
-        hasPowerUP = false;
-        powerUp.SetActive(false);
-        Debug.Log("your power up is done");
-
-    }
-
-    private void OnCollisionEnter(Collision collision)
+	private void OnCollisionEnter(Collision collision)
 	{
-        //what to do when power up is on
-		if (collision.gameObject.CompareTag("Enemy") && hasPowerUP)
-		{
-            //checking
-            Debug.Log("it worked");
-
-            //getting enemy rigibody
-            Rigidbody enemyRigibody = collision.gameObject.GetComponent<Rigidbody>();
-
-            //getting the direction to puss the enemy
-            Vector3 positionToPush = (collision.gameObject.transform.position - this.transform.position);
-
-            //pushing the enemy
-            enemyRigibody.AddForce(positionToPush * powerUpStrength, ForceMode.Impulse);
-
-		}
 		
 	}
 
